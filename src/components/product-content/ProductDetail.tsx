@@ -4,19 +4,19 @@ import { ProductParams } from "@/constants/assets";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Heart, X, ShoppingCart } from "lucide-react";
+import { X, ShoppingCart } from "lucide-react";
 import ImagesSection from "./ImagesSection";
+import ActionsButtons from "./ActionsButtons";
 
 interface ProductPageProps {
   product: ProductParams;
+  isLoggedIn: boolean;
 }
 
-export default function ProductDetail({ product }: ProductPageProps) {
+export default function ProductDetail({ product, isLoggedIn }: ProductPageProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || null);
-  const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
 
   // Calculate original price
   const calculateOriginalPrice = (currentPrice: number, discountPercent: number): number => {
@@ -119,20 +119,7 @@ export default function ProductDetail({ product }: ProductPageProps) {
             )}
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                disabled={product.quantity === 0}
-                className="flex-1 bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:from-zinc-700 disabled:to-zinc-700 text-black font-bold py-4 rounded-lg transition-all flex items-center justify-center gap-2 text-lg"
-              >
-                <ShoppingCart /> Add to Cart
-              </button>
-              <button 
-                onClick={() => setIsWishlisted(!isWishlisted)}
-                className={`px-6 py-4 rounded-lg border-2 transition-all ${isWishlisted ? "border-red-500 bg-red-500/10 text-red-400" : "border-zinc-700 text-zinc-400 hover:border-red-500"}`}
-              >
-                <Heart className={`w-5 h-5 ${isWishlisted ? "fill-current" : ""}`} />
-              </button>
-            </div>
+            <ActionsButtons product={product} isLoggedIn={isLoggedIn} />
 
             {/* Description */}
             {product.description && (
@@ -148,7 +135,7 @@ export default function ProductDetail({ product }: ProductPageProps) {
       {/* Lightbox Modal */}
       {isZoomed && (
         <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/95 backdrop-blur-sm animate-in fade-in duration-300"
           onClick={() => setIsZoomed(false)}
         >
           <button className="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-[110]">

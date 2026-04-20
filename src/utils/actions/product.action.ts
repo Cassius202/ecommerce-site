@@ -32,3 +32,24 @@ export async function getProductById(id: string) {
     return null;
   }
 }
+
+export type Category = {
+  id: string;
+  name: string;
+};
+
+export async function getCategoryById(id: string) {
+  const supabase = await createClient();
+  try {
+    const {data: category, error} = await supabase.from("categories").select('*').eq('id', id).single();
+    if (error) {
+      console.error("Supabase Error:", error.message);
+      return null;
+    }
+    const categoryData = {id: category.id, name: category.name};
+    return categoryData;
+  } catch(err) {
+    console.error(err);
+    return null;
+  }
+}

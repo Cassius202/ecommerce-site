@@ -55,7 +55,7 @@ const HeaderSlider = () => {
       if (newIndex !== currentIndex) setCurrentIndex(newIndex);
     }
   };
-
+  
   return (
     <section className="relative w-full bg-black text-white pt-24 overflow-hidden">
       {/* Scroll Container */}

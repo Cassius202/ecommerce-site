@@ -1,6 +1,9 @@
+'use client'
+
 import Link from "next/link";
 import { FaFacebook, FaInstagram, FaXTwitter } from "react-icons/fa6";
 import NewsletterSignup from "./Newsletter";
+import { usePathname } from "next/navigation";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -19,6 +22,11 @@ const categories = [
 ];
 
 const Footer = () => {
+  const pathname = usePathname();
+  const isSignInPage = /^\/(login|signup|error|account)/.test(pathname);
+
+  if (isSignInPage) return null;
+  
   return (
     <footer className="bg-[#0d0d12] text-white pt-16 pb-8 px-[clamp(1.25rem,6vw,6rem)]">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">

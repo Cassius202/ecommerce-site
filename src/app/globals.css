@@ -57,6 +57,9 @@ body {
   .btn-secondary {
     @apply bg-gray-600 text-white hover:bg-gray-700;
   }
+    .tooltip {
+    @apply absolute cursor-pointer left-1/2 -translate-x-20 ml-2 -bottom-8 bg-slate-300 text-slate-950 dark:bg-slate-800 dark:text-white text-xs rounded-md px-2 py-1 whitespace-nowrap opacity-0 pointer-events-none transition-opacity group-hover:opacity-100;
+  }
 }
 
 @keyframes float {
