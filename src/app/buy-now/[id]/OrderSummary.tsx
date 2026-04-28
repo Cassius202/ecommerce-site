@@ -7,6 +7,7 @@ import AddressForm from "./AddressForm";
 import { Address } from "@/utils/actions/address.actions";
 import { checkUserAuth } from "@/utils/actions/auth.actions";
 import toast from "react-hot-toast";
+import { number } from "framer-motion";
 
 interface OrderSummaryProps {
   product: ProductParams;
@@ -29,7 +30,9 @@ const OrderSummary = ({
   const [coupon, setCoupon] = useState("");
 
   const subtotal = product.price * quantity;
-  const shipping = product.product_shipping_fee || 0;
+
+  const shipping : number = product.product_shipping_fee || 0;
+
   const total = subtotal + shipping;
 
   const handlePayment = async () => {
@@ -49,6 +52,9 @@ const OrderSummary = ({
         body: JSON.stringify({
           email: auth.user.email,
           amount: total,
+          productID: product.id,
+          quantity: quantity,
+          addressID: selectedId,
         }),
       });
 

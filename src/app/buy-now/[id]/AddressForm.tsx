@@ -112,7 +112,7 @@ const AddressForm = ({ onSuccess }: { onSuccess: (newAddr: Address) => void }) =
           >
             <option value="" disabled>State</option>
             {nigerianStates.map((state) => (
-              <option key={state} value={state} className="bg-zinc-950">
+              <option key={state} value={state} className="bg-zinc-950 text-white">
                 {state}
               </option>
             ))}

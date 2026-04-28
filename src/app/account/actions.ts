@@ -1,5 +1,6 @@
 'use server'
 
+import { UserDetails } from "@/constants/assets";
 import { createClient } from "@/utils/supabase/server"
 
 export async function getUserDetails() {
@@ -26,4 +27,54 @@ export async function getUserDetails() {
   }
 
   return profile;
+}
+
+export async function getUserByEmail(email: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("store_users")
+    .select("*")
+    .eq("email", email)
+    .single();
+
+  if (error) {
+    console.error("Database fetch error:", error.message);
+    return null;
+  }
+
+  const userDetails: UserDetails = {
+    full_name: data?.full_name,
+    username: data?.username,
+    avatar_url: data?.avatar_url,
+    email: data?.email,
+    phone_number: data?.phone_number,
+  };
+
+  return { success: true, user: userDetails };
+}
+
+export async function getUserById(id: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("store_users")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.error("Database fetch error:", error.message);
+    return null;
+  }
+
+  const userDetails: UserDetails = {
+    full_name: data?.full_name,
+    username: data?.username,
+    avatar_url: data?.avatar_url,
+    email: data?.email,
+    phone_number: data?.phone_number,
+  };
+
+  return { success: true, user: userDetails };
 }

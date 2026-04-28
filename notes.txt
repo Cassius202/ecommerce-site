@@ -1,0 +1,32 @@
+How to setup an ecommerce store using Next.js and Supabase
+
+This is a Next.js project bootstrapped using create-next-app.
+
+main keys to understand: 
+-creating a users table in supabase
+-creating a categories table and making sure it is compulsorily linked to products: a product must belong to one category
+-creating a products table in supabase
+-creating a cart table in supabase
+-creating a orders table in supabase
+-creating a payments table in supabase
+-creating a user_addresses table in supabase
+
+initializing supabase: 
+-supabase.auth.signInWithPassword(email, password)
+-supabase.auth.signUp(email, password)
+-create a check user auth function that checks if the user is logged in and returns the user object {success: true, user: User object...including name, email and necessary things}
+-create a logout function that signs the user out and returns the user object {success: true, user: null}
+-using zustand to store the user object in the store
+-using zustand store user-email during payment
+
+
+NOTES: Use url for the transaction verification and to send the payment details to the success page receipt - zustand can't be bookmarked
+
+-- Your Payments Table
+id: uuid (primary key)
+reference: text (unique)
+user_id: uuid (references users.id)
+amount: numeric
+status: text (default: 'pending') -- values: 'pending', 'success', 'failed'
+metadata: jsonb -- stores cart items: { "item_id": 1, "qty": 2 }
+created_at: timestamp

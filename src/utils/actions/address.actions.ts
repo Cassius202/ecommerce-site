@@ -111,3 +111,24 @@ export async function deleteAddress(addressId: string) {
 
   revalidatePath("/checkout");
 }
+
+export async function getAddressById(addressId: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("Not authorized");
+
+  const { data, error } = await supabase
+    .from("addresses")
+    .select("*")
+    .eq("id", addressId)
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}

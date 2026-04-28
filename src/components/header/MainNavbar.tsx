@@ -22,7 +22,7 @@ const MainNavBar = ({ profile, isLoggedIn }: ProfileParams) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const isSignInPage = /^\/(login|signup|error)/.test(pathname);
+  const isSignInPage = /^\/(login|signup|error|checkout)/.test(pathname);
 
   if (isSignInPage) return null;
 

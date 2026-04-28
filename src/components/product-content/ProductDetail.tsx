@@ -7,6 +7,7 @@ import Link from "next/link";
 import { X, ShoppingCart } from "lucide-react";
 import ImagesSection from "./ImagesSection";
 import ActionsButtons from "./ActionsButtons";
+import Markdown from "@/utils/mark-down";
 
 interface ProductPageProps {
   product: ProductParams;
@@ -125,7 +126,9 @@ export default function ProductDetail({ product, isLoggedIn }: ProductPageProps)
             {product.description && (
               <div className="border-t border-zinc-800 pt-8">
                 <h3 className="text-lg font-bold text-white mb-4">Description</h3>
-                <p className="text-zinc-400 leading-relaxed">{product.description}</p>
+                <div className="text-zinc-400 leading-relaxed">
+                  <Markdown text={product.description} />
+                </div>
               </div>
             )}
           </div>

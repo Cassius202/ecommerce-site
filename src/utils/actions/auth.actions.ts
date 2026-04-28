@@ -7,7 +7,7 @@ export async function checkUserAuth() {
   const { data: { user }, error } = await supabase.auth.getUser();
 
   if (error || !user) {
-    return { success: false };
+    return { success: false, user: null };
   }
 
   return { success: true, user };

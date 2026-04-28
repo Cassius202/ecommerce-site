@@ -67,7 +67,7 @@ const CategorySection = ({ title, items }: { title: string, items: ProductParams
                 )}
               </div>
               <h3 className="text-sm font-medium text-zinc-300 truncate">{product.name}</h3>
-              <p className="text-white font-bold">₦{product.price.toLocaleString()}</p>
+              <p className="text-white font-bold">${product.price.toLocaleString()}</p>
             </Link>
           ))}
         </div>

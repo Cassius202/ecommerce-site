@@ -57,7 +57,7 @@ body {
   .btn-secondary {
     @apply bg-gray-600 text-white hover:bg-gray-700;
   }
-    .tooltip {
+  .tooltip {
     @apply absolute cursor-pointer left-1/2 -translate-x-20 ml-2 -bottom-8 bg-slate-300 text-slate-950 dark:bg-slate-800 dark:text-white text-xs rounded-md px-2 py-1 whitespace-nowrap opacity-0 pointer-events-none transition-opacity group-hover:opacity-100;
   }
 }
@@ -84,4 +84,30 @@ body {
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-scale {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+.spinner {
+  animation: spin 1.5s linear infinite;
+}
+
+.dot {
+  animation: pulse-scale 1.4s ease-in-out infinite;
 }

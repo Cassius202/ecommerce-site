@@ -6,15 +6,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 const NotificationBar = () => {
+  const [mounted, setMounted] = useState(false); // To prevent hydration flicker
   const [isVisible, setIsVisible] = useState(true);
   const pathname = usePathname();
 
-  const isHomePage = pathname === "/";
-  const isSignInPage = /^\/(login|signup|error)/.test(pathname);
+  // Robust path check
+  const isHomePage = pathname === "/" || pathname === "" || pathname === null;
+  const isSignInPage = /^\/(login|signup|error)/.test(pathname || "");
 
-  // Track scroll position to hide notification bar
   useEffect(() => {
+    setMounted(true); // Signal that we are safely in the browser
+
     const handleScroll = () => {
+      // Check if we are actually on the home page before toggling visibility
       if (window.scrollY > 20) {
         setIsVisible(false);
       } else {
@@ -26,11 +30,14 @@ const NotificationBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  if (isSignInPage) return null;
+  // 1. Don't render anything until client-side hydration is done
+  // 2. Hide on Auth pages
+  // 3. Hide if it's not the home page
+  if (!mounted || isSignInPage || !isHomePage) return null;
 
   return (
     <AnimatePresence>
-      {isVisible && isHomePage && (
+      {isVisible && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
